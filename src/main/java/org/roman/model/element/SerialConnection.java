@@ -1,14 +1,14 @@
 package org.roman.model.element;
 
 
+import java.util.stream.Collectors;
+
 /**
  * Created by Roman on 11.10.2017.
  */
-public class SerialConnection extends Connection
-{
+public class SerialConnection extends Connection {
     @Override
-    public double getResistance()
-    {
+    public double getResistance() {
         if (resistance == 0)
             resistance = elements.stream().mapToDouble(Element::getResistance).sum();
 
@@ -16,10 +16,8 @@ public class SerialConnection extends Connection
     }
 
     @Override
-    public double getVoltage()
-    {
-        if (voltage == 0)
-        {
+    public double getVoltage() {
+        if (voltage == 0) {
             voltage = getCurrent() * getResistance();
         }
 
@@ -27,17 +25,15 @@ public class SerialConnection extends Connection
     }
 
     @Override
-    public double getCurrent()
-    {
+    public double getCurrent() {
         if (current == 0)
-            current =  getVoltage() * getConductance();
+            current = getVoltage() * getConductance();
 
         return current;
     }
 
     @Override
-    public double getConductance()
-    {
+    public double getConductance() {
         if (conductance == 0)
             conductance = 1 / getResistance();
 
@@ -46,41 +42,33 @@ public class SerialConnection extends Connection
 
 
     @Override
-    public void setVoltage(double voltage)
-    {
+    public void setVoltage(double voltage) {
         super.setVoltage(voltage);
         setCurrent(voltage * getConductance());
     }
 
     @Override
-    public void setCurrent(double current)
-    {
+    public void setCurrent(double current) {
         super.setCurrent(current);
 
-        for (Element element : elements)
-        {
+        for (Element element : elements) {
             element.setCurrent(current);
             element.setVoltage(current * element.getResistance());
         }
     }
 
     @Override
-    public void normalize()
-    {
-        for (int i = 0; i < elements.size(); i++)
-        {
-            Element element = elements.get(i);
-            if (element instanceof SerialConnection)
-            {
-                elements.addAll(((SerialConnection) element).elements);
-                elements.remove(element);
-                i--;
-            }
-            else if (element instanceof Idle)
-            {
-                elements.remove(element);
-                i--;
-            }
-        }
+    public void normalize() {
+        elements.stream()
+                .filter(e -> e instanceof Idle)
+                .forEach(e -> elements.remove(e));
+
+        elements.stream()
+                .filter(e -> e instanceof SerialConnection)
+                .forEach(e ->
+                {
+                    elements.addAll(((SerialConnection) e).elements);
+                    elements.remove(e);
+                });
     }
 }

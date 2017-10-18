@@ -150,7 +150,7 @@ public class OneSourceCircuit extends Circuit
                             .filter( n -> n.getParallelConnectionRule() == ParallelConnectionRule.REPLACE_ALL)
                             .findFirst().orElse(connection);
 
-                    replaceLink(connection, node, link.getConnectedNode(node));
+                    replaceLink(connection, node, dependent);
                     connectNodes(idle, node, dependent);
                 }
                 else if (!connected.getLinksToNode(node).contains(idle))

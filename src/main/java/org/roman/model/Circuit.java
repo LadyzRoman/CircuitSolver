@@ -74,7 +74,7 @@ public class Circuit extends Graph
     {
         if (!elements.contains(element) || sources.contains(element)) return;
 
-        elements.stream().filter(e -> e.equals(element)).forEach( e ->
+        elements.stream().filter(element::equals).forEach( e ->
         {
             e.setVoltage(e.getVoltage() + element.getVoltage());
             e.setCurrent(e.getCurrent() + element.getCurrent());
