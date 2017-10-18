@@ -37,8 +37,7 @@ public class ParallelConnection extends Connection
     public double getConductance()
     {
         if (conductance == 0)
-            for (Element element : elements)
-                conductance += element.getConductance();
+            conductance = elements.stream().mapToDouble(Element::getConductance).sum();
 
         return conductance;
     }
@@ -68,9 +67,6 @@ public class ParallelConnection extends Connection
     @Override
     public void normalize()
     {
-        for (Element element : elements)
-        {
-            element.normalize();
-        }
+        elements.forEach(Element::normalize);
     }
 }

@@ -61,19 +61,13 @@ public class Circuit extends Graph
         OneSourceCircuit circuit = copyOfThis(source);
 
         circuit.connectResistance();
-
         circuit.calculate();
 
         circuit.elements.forEach(this::addReaction);
 
-        try
-        {
-            System.out.println(new Formatter(circuit).getPrettyView());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
+        System.out.println(new Formatter(circuit).getPrettyView());
+
     }
 
     private void addReaction(Element element)

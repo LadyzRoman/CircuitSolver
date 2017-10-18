@@ -2,6 +2,7 @@ package org.roman.model.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -42,14 +43,9 @@ public class Node
 
     public List<Link> getLinksToNode(Node node)
     {
-        List<Link> result = new ArrayList<>();
-        for (Link link : links)
-        {
-            if (link.getConnectedNode(this).equals(node))
-                result.add(link);
-        }
-
-        return result;
+        return links.stream()
+                .filter( l -> l.getConnectedNode(this).equals(node))
+                .collect(Collectors.toList());
     }
 
 

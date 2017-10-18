@@ -10,9 +10,7 @@ public class SerialConnection extends Connection
     public double getResistance()
     {
         if (resistance == 0)
-            for (Element element : elements)
-                resistance += element.getResistance();
-
+            resistance = elements.stream().mapToDouble(Element::getResistance).sum();
 
         return resistance;
     }
