@@ -25,10 +25,14 @@ public class Formatter
         elements = new PrintingElement[20][20];
     }
 
-    public String getPrettyView() throws Exception
+    public String getPrettyView()
     {
         if (circuit.getSize() != 2)
-            throw new Exception("Format exception");
+        {
+            System.out.println("Malformed circuit");
+            return null;
+        }
+
         Node node = circuit.getNode(0);
 
         Coordinate coordinate = new Coordinate(0, 0);
@@ -166,16 +170,12 @@ public class Formatter
             Element element = iterator.next();
 
             if (!iterator.hasNext())
-            {
-
                 res = prepareElement(element, res);
-            }
+
             else
             {
                 res = prepareElement(element, res);
-
                 res.line++;
-
             }
 
             pos = Math.max(pos, res.pos);

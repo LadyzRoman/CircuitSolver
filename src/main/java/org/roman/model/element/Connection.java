@@ -5,6 +5,8 @@ import org.roman.model.graph.Link;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by Roman on 11.10.2017.
@@ -20,8 +22,9 @@ public abstract class Connection extends Element
 
     public void addElements(List<Link> linksToNode)
     {
-        for (Link link : linksToNode)
-            elements.add((Element) link);
+        elements.addAll(linksToNode.stream()
+                .map(l -> (Element) l)
+                .collect(Collectors.toList()));
     }
 
     public List<Element> getElements()
@@ -33,6 +36,4 @@ public abstract class Connection extends Element
     {
         elements.remove(element);
     }
-
-
 }

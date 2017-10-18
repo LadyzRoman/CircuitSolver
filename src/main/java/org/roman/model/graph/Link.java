@@ -21,10 +21,7 @@ public class Link
 
     public Node getConnectedNode(Node node)
     {
-        if (source.equals(node))
-            return destination;
-        else
-            return source;
+        return source.equals(node) ? destination : source;
     }
 
     public void removeConnection()
