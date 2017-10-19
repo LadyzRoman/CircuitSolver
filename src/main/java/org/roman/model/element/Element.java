@@ -1,5 +1,6 @@
 package org.roman.model.element;
 
+import org.roman.model.math.RationalFraction;
 import org.roman.model.util.CurrentDirection;
 import org.roman.model.util.ParallelConnectionRule;
 import org.roman.model.util.VoltagePolarity;
@@ -10,10 +11,10 @@ import org.roman.model.graph.Link;
  */
 public class Element extends Link
 {
-    protected double resistance;
-    protected double voltage;
-    protected double current;
-    protected double conductance;
+    protected RationalFraction resistance;
+    protected RationalFraction voltage;
+    protected RationalFraction current;
+    protected RationalFraction conductance;
     protected VoltagePolarity polariry;
     protected CurrentDirection direction;
     protected int index;
@@ -32,46 +33,46 @@ public class Element extends Link
         index = element.index;
         resistance = element.resistance;
         conductance = element.conductance;
-        current = 0;
-        voltage = 0;
+        current = new RationalFraction();
+        voltage = new RationalFraction();
     }
 
-    public double getResistance()
+    public RationalFraction getResistance()
     {
         return resistance;
     }
 
-    public void setResistance(double resistance)
+    public void setResistance(RationalFraction resistance)
     {
         this.resistance = resistance;
     }
 
-    public double getVoltage()
+    public RationalFraction getVoltage()
     {
         return voltage;
     }
 
-    public void setVoltage(double voltage)
+    public void setVoltage(RationalFraction voltage)
     {
         this.voltage = voltage;
     }
 
-    public double getCurrent()
+    public RationalFraction getCurrent()
     {
         return current;
     }
 
-    public void setCurrent(double current)
+    public void setCurrent(RationalFraction current)
     {
         this.current = current;
     }
 
-    public double getConductance()
+    public RationalFraction getConductance()
     {
         return conductance;
     }
 
-    public void setConductance(double conductance)
+    public void setConductance(RationalFraction conductance)
     {
         this.conductance = conductance;
     }

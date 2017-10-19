@@ -1,66 +1,68 @@
 package org.roman.model.element;
 
 
+import org.roman.model.math.RationalFraction;
+
 /**
  * Created by Roman on 11.10.2017.
  */
 public class ParallelConnection extends Connection
 {
     @Override
-    public double getResistance()
+    public RationalFraction getResistance()
     {
-        if (resistance == 0)
-            resistance = 1 / getConductance();
+        if (resistance.equals(RationalFraction.NULL))
+            resistance = RationalFraction.ONE.div(getConductance());
 
         return resistance;
     }
 
     @Override
-    public double getVoltage()
+    public RationalFraction getVoltage()
     {
-        if (voltage == 0)
-            voltage = getCurrent() * getResistance();
+        if (voltage.equals(RationalFraction.NULL))
+            voltage = getCurrent().mul(getResistance());
 
         return voltage;
     }
 
     @Override
-    public double getCurrent()
+    public RationalFraction getCurrent()
     {
-        if (current == 0)
-            current = getVoltage() * getConductance();
+        if (current.equals(RationalFraction.NULL))
+            current = getVoltage().mul(getConductance());
 
         return current;
     }
 
     @Override
-    public double getConductance()
+    public RationalFraction getConductance()
     {
-        if (conductance == 0)
-            conductance = elements.stream().mapToDouble(Element::getConductance).sum();
+        if (conductance.equals(RationalFraction.NULL))
+            conductance = elements.stream().map(Element::getConductance).reduce(new RationalFraction(), RationalFraction::add);
 
         return conductance;
     }
 
     @Override
-    public void setVoltage(double voltage)
+    public void setVoltage(RationalFraction voltage)
     {
         super.setVoltage(voltage);
         for (Element element : elements)
         {
             element.setVoltage(voltage);
-            element.setCurrent(voltage * element.getConductance());
+            element.setCurrent(voltage.mul(element.getConductance()));
         }
 
-        if (current == 0)
+        if (!current.equals(RationalFraction.NULL))
             super.setCurrent(getCurrent());
     }
 
     @Override
-    public void setCurrent(double current)
+    public void setCurrent(RationalFraction current)
     {
         super.setCurrent(current);
-        setVoltage(current * getResistance());
+        setVoltage(current.mul(getResistance()));
     }
 
 

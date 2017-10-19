@@ -1,6 +1,8 @@
 package org.roman.model.element;
 
 
+import org.roman.model.math.RationalFraction;
+
 import java.util.stream.Collectors;
 
 /**
@@ -8,52 +10,52 @@ import java.util.stream.Collectors;
  */
 public class SerialConnection extends Connection {
     @Override
-    public double getResistance() {
-        if (resistance == 0)
-            resistance = elements.stream().mapToDouble(Element::getResistance).sum();
+    public RationalFraction getResistance() {
+        if (resistance.equals(RationalFraction.NULL))
+            resistance = elements.stream().map(Element::getResistance).reduce(new RationalFraction(), RationalFraction::add);
 
         return resistance;
     }
 
     @Override
-    public double getVoltage() {
-        if (voltage == 0) {
-            voltage = getCurrent() * getResistance();
+    public RationalFraction getVoltage() {
+        if (voltage.equals(RationalFraction.NULL)) {
+            voltage = getCurrent().mul(getResistance());
         }
 
         return voltage;
     }
 
     @Override
-    public double getCurrent() {
-        if (current == 0)
-            current = getVoltage() * getConductance();
+    public RationalFraction getCurrent() {
+        if (current.equals(RationalFraction.NULL))
+            current = getVoltage().mul(getConductance());
 
         return current;
     }
 
     @Override
-    public double getConductance() {
-        if (conductance == 0)
-            conductance = 1 / getResistance();
+    public RationalFraction getConductance() {
+        if (conductance.equals(RationalFraction.NULL))
+            conductance = RationalFraction.ONE.div(getResistance());
 
         return conductance;
     }
 
 
     @Override
-    public void setVoltage(double voltage) {
+    public void setVoltage(RationalFraction voltage) {
         super.setVoltage(voltage);
-        setCurrent(voltage * getConductance());
+        setCurrent(voltage.mul(getConductance()));
     }
 
     @Override
-    public void setCurrent(double current) {
+    public void setCurrent(RationalFraction current) {
         super.setCurrent(current);
 
         for (Element element : elements) {
             element.setCurrent(current);
-            element.setVoltage(current * element.getResistance());
+            element.setVoltage(current.mul(element.getResistance()));
         }
     }
 
