@@ -1,5 +1,9 @@
 package org.roman.model.math;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class RationalFraction
 {
     private long numerator;
@@ -26,6 +30,14 @@ public class RationalFraction
     {
         this.numerator = numerator;
         denumerator = 1;
+    }
+
+    public static void main(String[] args)
+    {
+        Integer[] arr = {1,2,3,4,5};
+        List<Integer> list = new ArrayList<>(Arrays.asList(arr));
+
+        list.forEach(list::remove);
     }
 
     public RationalFraction add(RationalFraction addition)
@@ -77,10 +89,30 @@ public class RationalFraction
         denumerator /= gcd;
     }
 
+
+    public static RationalFraction parseRF(String string)
+    {
+        String [] parts = string.split("/");
+        if (parts.length > 2 || parts.length < 1)
+            throw new NumberFormatException("Unable to parse: " + string + " to rational fraction");
+
+        int numerator = Integer.parseInt(parts[0].trim());;
+        int denumerator = 1;
+
+        if (parts.length == 2)
+        {
+            denumerator = Integer.parseInt(parts[1].trim());
+        }
+
+        return new RationalFraction(numerator, denumerator);
+    }
+
     @Override
     public String toString()
     {
-        return String.format("%d / %d" , numerator, denumerator);
+        return denumerator == 1 || numerator == 0 ?
+                String.valueOf(numerator)
+                : String.format("%d/%d" , numerator, denumerator);
     }
 
 

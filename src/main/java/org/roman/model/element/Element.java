@@ -24,6 +24,10 @@ public class Element extends Link
 
     public Element()
     {
+        voltage = new RationalFraction();
+        current = new RationalFraction();
+        resistance = new RationalFraction();
+        conductance = new RationalFraction();
         index = globalIndex + 1;
         globalIndex++;
     }

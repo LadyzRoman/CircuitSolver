@@ -6,6 +6,7 @@ import org.roman.model.element.Source;
 import org.roman.model.graph.Graph;
 import org.roman.model.graph.Link;
 import org.roman.model.graph.Node;
+import org.roman.model.math.RationalFraction;
 import org.roman.view.Formatter;
 
 import java.util.ArrayList;
@@ -47,8 +48,8 @@ public class Circuit extends Graph
                 .filter(e -> !sources.contains(e))
                 .forEach(e ->
                 {
-                    e.setCurrent(0);
-                    e.setVoltage(0);
+                    e.setCurrent(new RationalFraction());
+                    e.setVoltage(new RationalFraction());
                 });
 
         sources.forEach(this::calculatePartialReactions);
@@ -76,8 +77,8 @@ public class Circuit extends Graph
 
         elements.stream().filter(element::equals).forEach( e ->
         {
-            e.setVoltage(e.getVoltage() + element.getVoltage());
-            e.setCurrent(e.getCurrent() + element.getCurrent());
+            e.setVoltage(e.getVoltage().add(element.getVoltage()));
+            e.setCurrent(e.getCurrent().add(element.getCurrent()));
         });
     }
 

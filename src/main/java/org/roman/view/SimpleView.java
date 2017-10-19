@@ -2,6 +2,7 @@ package org.roman.view;
 
 import org.roman.model.*;
 import org.roman.model.element.*;
+import org.roman.model.math.RationalFraction;
 
 import java.util.Scanner;
 
@@ -20,8 +21,10 @@ public class SimpleView
 
         circuit.calculateReactions();
 
+        System.out.println();
+
         for (Element element : circuit.getElements())
-            System.out.format("%s : i = %.4f ; u = %.4f\n" , element , element.getCurrent() , element.getVoltage());
+            System.out.format("%s : i = %s ; u = %s\n" , element , element.getCurrent() , element.getVoltage());
     }
 
     public SimpleView()
@@ -68,7 +71,7 @@ public class SimpleView
 
         int source = Integer.parseInt(elementInfo[1]);
         int dest = Integer.parseInt(elementInfo[2]);
-        int reaction = Integer.parseInt(elementInfo[3]);
+        RationalFraction reaction = RationalFraction.parseRF(elementInfo[3]);
         Element element;
 
         switch (elementInfo[0])
