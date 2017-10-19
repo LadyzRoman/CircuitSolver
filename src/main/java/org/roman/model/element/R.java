@@ -1,5 +1,6 @@
 package org.roman.model.element;
 
+import org.roman.model.math.RationalFraction;
 import org.roman.model.util.ParallelConnectionRule;
 
 /**
@@ -8,10 +9,10 @@ import org.roman.model.util.ParallelConnectionRule;
 public class R extends Element
 {
 
-    public R(float resistance)
+    public R(RationalFraction resistance)
     {
         this.resistance = resistance;
-        this.conductance = 1 / resistance;
+        this.conductance = RationalFraction.ONE.div(resistance);
         this.parallelConnectionRule = ParallelConnectionRule.REGULAR;
     }
 
@@ -24,7 +25,7 @@ public class R extends Element
     @Override
     public String toString()
     {
-        return String.format("[R%s= %.1f]", index, resistance);
+        return String.format("[R%s= %s]", index, resistance);
     }
 
     @Override

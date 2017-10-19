@@ -1,12 +1,14 @@
 package org.roman.model.element;
 
+import org.roman.model.math.RationalFraction;
+
 /**
  * Created by Roman on 09.10.2017.
  */
 public class CurrentSource extends Source
 {
 
-    public CurrentSource(int current)
+    public CurrentSource(RationalFraction current)
     {
         this.current = current;
     }
