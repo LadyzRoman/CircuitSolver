@@ -25,7 +25,7 @@ public class R extends Element
     @Override
     public String toString()
     {
-        return String.format("[R%s= %s]", index, resistance);
+        return String.format("[R%s= %.2s]", index, resistance);
     }
 
     @Override

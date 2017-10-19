@@ -3,6 +3,8 @@ package org.roman.model.element;
 
 import org.roman.model.math.RationalFraction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -61,16 +63,19 @@ public class SerialConnection extends Connection {
 
     @Override
     public void normalize() {
-        elements.stream()
-                .filter(e -> e instanceof Idle)
-                .forEach(e -> elements.remove(e));
+        List<Element> cache;
+        elements = elements.stream()
+                .filter(e -> !(e instanceof Idle))
+                .collect(Collectors.toList());
 
-        elements.stream()
+        cache = elements.stream()
                 .filter(e -> e instanceof SerialConnection)
-                .forEach(e ->
-                {
-                    elements.addAll(((SerialConnection) e).elements);
-                    elements.remove(e);
-                });
+                .collect(Collectors.toList());
+
+        elements.removeAll(cache);
+
+        cache.forEach(e -> elements.addAll(((SerialConnection)e).getElements()));
+        if (!cache.isEmpty())
+            normalize();
     }
 }

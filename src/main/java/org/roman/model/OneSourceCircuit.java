@@ -5,6 +5,7 @@ import org.roman.model.element.ParallelConnection;
 import org.roman.model.element.SerialConnection;
 import org.roman.model.graph.Link;
 import org.roman.model.graph.Node;
+import org.roman.model.math.RationalFraction;
 import org.roman.model.util.ParallelConnectionRule;
 
 import java.util.Arrays;
@@ -19,12 +20,12 @@ public class OneSourceCircuit extends Circuit
 
     public void calculate()
     {
-        if (idle.getCurrent() != 0)
+        if (!idle.getCurrent().equals(RationalFraction.NULL))
             getNode(0).getLinks().stream()
                     .filter(e -> !e.equals(idle))
                     .forEach(e -> ((Element) e).setCurrent(idle.getCurrent()));
 
-        else if (idle.getVoltage() != 0)
+        else if (!idle.getVoltage().equals(RationalFraction.NULL))
             getNode(0).getLinks().stream()
                     .filter(e -> !e.equals(idle))
                     .forEach(e -> ((Element) e).setVoltage(idle.getVoltage()));
