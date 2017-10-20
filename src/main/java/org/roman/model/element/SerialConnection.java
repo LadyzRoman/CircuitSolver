@@ -63,19 +63,19 @@ public class SerialConnection extends Connection {
 
     @Override
     public void normalize() {
-        List<Element> cache;
+
+        elements.forEach(Element::normalize);
+
         elements = elements.stream()
                 .filter(e -> !(e instanceof Idle))
                 .collect(Collectors.toList());
 
-        cache = elements.stream()
+
+        elements.addAll(elements.stream()
                 .filter(e -> e instanceof SerialConnection)
-                .collect(Collectors.toList());
+                .flatMap(e -> ((SerialConnection)e).getElements().stream())
+                .collect(Collectors.toList()));
 
-        elements.removeAll(cache);
-
-        cache.forEach(e -> elements.addAll(((SerialConnection)e).getElements()));
-        if (!cache.isEmpty())
-            normalize();
+        elements.removeIf(e -> e instanceof SerialConnection);
     }
 }
