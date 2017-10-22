@@ -3,8 +3,6 @@ package org.roman.model.element;
 
 import org.roman.model.math.RationalFraction;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
