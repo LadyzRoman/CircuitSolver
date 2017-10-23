@@ -32,11 +32,13 @@ public class WindowView extends Application
 
             primaryStage.setScene(new Scene(pane));
 
-            CircuitCanvas canvas = new CircuitCanvas(300,300);
+            CircuitCanvas canvas = new CircuitCanvas(400,400);
+
+            //canvas.autosize();
 
             pane.setCenter(canvas);
 
-
+            primaryStage.setResizable(true);
 
             primaryStage.show();
 
