@@ -1,5 +1,6 @@
 package org.roman.model.element;
 
+import javafx.scene.canvas.GraphicsContext;
 import org.roman.model.math.RationalFraction;
 import org.roman.model.util.CurrentDirection;
 import org.roman.model.util.ParallelConnectionRule;
@@ -17,9 +18,10 @@ public class Element extends Link
     protected RationalFraction conductance;
     protected VoltagePolarity polariry;
     protected CurrentDirection direction;
-    protected int index;
     protected ParallelConnectionRule parallelConnectionRule;
+
     private static int globalIndex = 0;
+    protected int index;
 
 
     public Element()

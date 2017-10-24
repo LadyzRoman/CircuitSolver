@@ -1,4 +1,4 @@
-package org.roman.view;
+package org.roman.view.console;
 
 import org.roman.model.element.Element;
 

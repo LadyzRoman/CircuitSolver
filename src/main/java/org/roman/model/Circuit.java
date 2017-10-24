@@ -7,7 +7,7 @@ import org.roman.model.graph.Graph;
 import org.roman.model.graph.Link;
 import org.roman.model.graph.Node;
 import org.roman.model.math.RationalFraction;
-import org.roman.view.Formatter;
+import org.roman.view.console.Formatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,15 @@ public class Circuit extends Graph
     public Circuit(int size)
     {
         super(size);
+    }
+
+    public Circuit(Circuit circuit, int size)
+    {
+        super(size);
+        for (Element element : circuit.getElements())
+        {
+            connectNodes(element.copy(), getNode(element.getSource().getIndex()), getNode(element.getDestination().getIndex()));
+        }
     }
 
     public void setSource(Source source)

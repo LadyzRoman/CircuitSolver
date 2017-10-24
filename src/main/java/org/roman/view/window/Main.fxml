@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.roman.view.window.MainViewController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -36,15 +36,15 @@
          <items>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <RadioButton layoutX="36.0" layoutY="52.0" mnemonicParsing="false" text="RadioButton" />
-                  <RadioButton layoutX="36.0" layoutY="104.0" mnemonicParsing="false" text="RadioButton" />
-                  <RadioButton layoutX="36.0" layoutY="157.0" mnemonicParsing="false" text="RadioButton" />
-                  <RadioButton layoutX="36.0" layoutY="213.0" mnemonicParsing="false" text="RadioButton" />
+                  <RadioButton fx:id="idle" layoutX="36.0" layoutY="52.0" mnemonicParsing="false" text="RadioButton" />
+                  <RadioButton fx:id="r" layoutX="36.0" layoutY="104.0" mnemonicParsing="false" text="RadioButton" />
+                  <RadioButton fx:id="currentSource" layoutX="36.0" layoutY="157.0" mnemonicParsing="false" text="RadioButton" />
+                  <RadioButton fx:id="voltageSource" layoutX="36.0" layoutY="213.0" mnemonicParsing="false" text="RadioButton" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="executeButton" layoutX="26.0" layoutY="11.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="111.0" text="Button" />
+                  <Button fx:id="executeButton" layoutX="26.0" layoutY="11.0" mnemonicParsing="false" onAction="#calculateCircuit" prefHeight="38.0" prefWidth="111.0" text="Button" />
                </children>
             </AnchorPane>
          </items>

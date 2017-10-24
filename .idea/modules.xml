@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CircuitSolver.iml" filepath="$PROJECT_DIR$/.idea/CircuitSolver.iml" />
-      <module fileurl="file://D:/CircutSolver/CircutSolver.iml" filepath="D:/CircutSolver/CircutSolver.iml" />
     </modules>
   </component>
 </project>
