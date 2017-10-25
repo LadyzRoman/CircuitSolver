@@ -51,8 +51,9 @@ public class Circuit extends Graph
         }
     }
 
-    public List<Element> calculateReactions()
+    public List<Element> calculateReactions() throws Exception
     {
+        if (sources.isEmpty()) throw new Exception("No sources in circuit!");
         elements.stream()
                 .filter(e -> !sources.contains(e))
                 .forEach(e ->
@@ -74,7 +75,6 @@ public class Circuit extends Graph
         circuit.calculate();
 
         circuit.elements.forEach(this::addReaction);
-
 
         System.out.println(new Formatter(circuit).getPrettyView());
 

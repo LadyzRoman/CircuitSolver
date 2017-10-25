@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseButton;
@@ -66,6 +67,7 @@ public class WindowView extends Application
                 {
                     severClosestPoints(v.getX(), v.getY());
                 }
+
             });
 
             buttonController = loader.getController();
@@ -76,7 +78,6 @@ public class WindowView extends Application
 
 
             repaint();
-
             primaryStage.show();
         }
         catch (IOException e)
@@ -92,7 +93,10 @@ public class WindowView extends Application
 
         List<Point2D> closestPoints = canvas.getPoints().stream().sorted(Comparator.comparing(point::distance)).limit(2).collect(Collectors.toList());
 
-        Optional<ElementWrapper> el = printingElements.stream().filter(wr -> wr.getP1().equals(closestPoints.get(0)) && wr.getP2().equals(closestPoints.get(1))).findFirst();
+        Optional<ElementWrapper> el = printingElements.stream()
+                .filter(wr -> (wr.getP1().equals(closestPoints.get(0)) && wr.getP2().equals(closestPoints.get(1)))
+                || (wr.getP1().equals(closestPoints.get(1)) && wr.getP2().equals(closestPoints.get(0))))
+                .findFirst();
 
         if (el.isPresent())
         {
@@ -106,10 +110,16 @@ public class WindowView extends Application
     private void connectClosestPoints(double x, double y)
     {
         Point2D point = new Point2D(x, y);
-        List<Point2D> closestPoints = canvas.getPoints().stream().sorted(Comparator.comparing(point::distance)).limit(2).collect(Collectors.toList());
+        List<Point2D> closestPoints = canvas.getPoints()
+                .stream()
+                .sorted(Comparator.comparing(point::distance))
+                .limit(2)
+                .collect(Collectors.toList());
 
-        if (printingElements.stream().anyMatch(wr -> wr.getP1().equals(closestPoints.get(0)) && wr.getP2().equals(closestPoints.get(1))))
-            return;
+        if (printingElements.stream()
+                .anyMatch(wr -> (wr.getP1().equals(closestPoints.get(0)) && wr.getP2().equals(closestPoints.get(1)))
+                        || (wr.getP1().equals(closestPoints.get(1)) && wr.getP2().equals(closestPoints.get(0)))))
+        return;
 
         Element element = getElement();
         ElementWrapper wr = new ElementWrapper(element, buttonController.getCurrentElement(), closestPoints.get(0), closestPoints.get(1));
@@ -165,7 +175,7 @@ public class WindowView extends Application
 
     public void calculateCircuit()
     {
-
+        controller.calculate();
     }
 
     public int getSize()
@@ -179,5 +189,16 @@ public class WindowView extends Application
         canvas.print();
         printingElements.forEach(ElementWrapper::draw);
 
+    }
+
+    public void showError(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        alert.setTitle("Error!");
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+
+        alert.showAndWait();
     }
 }

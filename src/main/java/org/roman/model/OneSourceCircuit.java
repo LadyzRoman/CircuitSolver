@@ -1,6 +1,7 @@
 package org.roman.model;
 
 import org.roman.model.element.Element;
+import org.roman.model.element.Idle;
 import org.roman.model.element.ParallelConnection;
 import org.roman.model.element.SerialConnection;
 import org.roman.model.graph.Link;
@@ -9,6 +10,7 @@ import org.roman.model.math.RationalFraction;
 import org.roman.model.util.ParallelConnectionRule;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 /**
@@ -114,11 +116,21 @@ public class OneSourceCircuit extends Circuit
         Node connected = links[0].getConnectedNode(node);
         if (connected.getLinksToNode(node).size() == 1)
         {
-            connection.addElements(node.getLinks());
+            connection.addElements(node.getLinks()
+                    .stream()
+                    .filter(e -> !(e instanceof Idle))
+                    .collect(Collectors.toList())
+            );
+
             Node first = links[0].getConnectedNode(node);
             Node second = links[1].getConnectedNode(node);
 
-            connectNodes(connection, first, second);
+            if (connection.getElements().isEmpty())
+                connectNodes(new Idle(), first, second);
+            else if (connection.getElements().size() == 1)
+                connectNodes(connection.getElements().get(0), first, second);
+            else
+                connectNodes(connection, first, second);
 
             replaceLink(null, first, node);
             replaceLink(null, second, node);

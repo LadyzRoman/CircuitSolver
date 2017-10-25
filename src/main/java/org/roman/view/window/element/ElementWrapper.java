@@ -30,7 +30,6 @@ public class ElementWrapper
         manager.printElement(type, p1, p2);
     }
 
-
     public Point2D getP1()
     {
         return p1;

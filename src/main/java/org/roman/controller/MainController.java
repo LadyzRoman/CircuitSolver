@@ -2,6 +2,7 @@ package org.roman.controller;
 
 import org.roman.model.Circuit;
 import org.roman.model.element.Element;
+import org.roman.model.element.Source;
 import org.roman.view.window.WindowView;
 
 import java.util.List;
@@ -26,19 +27,24 @@ public class MainController
     public void setElement(Element element, int node1, int node2)
     {
         circuit.connectNodes(element, circuit.getNode(node1), circuit.getNode(node2));
+        if (element instanceof Source)
+            circuit.setSource((Source) element);
+
         view.repaint();
     }
+
+
 
     public void calculate()
     {
         try
         {
             List<Element> element = circuit.calculateReactions();
-            //view.
+            view.repaint();
         }
         catch (Exception e)
         {
-
+            view.showError(e.getMessage());
         }
     }
 }
